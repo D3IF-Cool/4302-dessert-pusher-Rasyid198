@@ -14,28 +14,43 @@
 // * limitations under the License.
 // */
 //
-//package com.example.android.dessertclicker
-//
-//import android.os.Handler
-//import timber.log.Timber
-//import android.os.Looper
-///**
-// * This is a class representing a timer that you can start or stop. The secondsCount outputs a count of
-// * how many seconds since it started, every one second.
-// *
-// * -----
-// *
-// * Handler and Runnable are beyond the scope of this lesson. This is in part because they deal with
-// * threading, which is a complex topic that will be covered in a later lesson.
-// *
-// * If you want to learn more now, you can take a look on the Android Developer documentation on
-// * threading:
-// *
-// * https://developer.android.com/guide/components/processes-and-threads
-// *
-// */
-//class DessertTimer {
-//
+package com.example.android.dessertclicker
+
+import android.os.Handler
+import timber.log.Timber
+import android.os.Looper
+/**
+ * This is a class representing a timer that you can start or stop. The secondsCount outputs a count of
+ * how many seconds since it started, every one second.
+ *
+ * -----
+ *
+ * Handler and Runnable are beyond the scope of this lesson. This is in part because they deal with
+ * threading, which is a complex topic that will be covered in a later lesson.
+ *
+ * If you want to learn more now, you can take a look on the Android Developer documentation on
+ * threading:
+ *
+ * https://developer.android.com/guide/components/processes-and-threads
+ *
+ */
+class DessertTimer {
+    var secondsCount = 0
+    private var handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable: Runnable
+    fun startTimer() {
+        runnable = Runnable {
+            secondsCount++
+            Timber.i("Timer is at : $secondsCount")
+            handler.postDelayed(runnable, 1000)
+        }
+        handler.postDelayed(runnable, 1000)
+    }
+    fun stopTimer() {
+        handler.removeCallbacks(runnable)
+    }
+}
+
 //    // The number of seconds counted since the timer started
 //    var secondsCount = 0
 //
